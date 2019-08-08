@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/ic_menu_job"
+        android:title="Jobs"
+        android:icon="@drawable/ic_job_gray"/>
+    <item
+        android:id="@+id/ic_menu_company"
+        android:title="Companies"
+        android:icon="@drawable/ic_company_gray"/>
+    <item
+        android:id="@+id/ic_menu_home"
+        android:title="Home"
+        android:icon="@drawable/ic_home_gray"/>
+    <item
+        android:id="@+id/ic_menu_events"
+        android:title="Events"
+        android:icon="@drawable/ic_event_gray"/>
+    <item
+        android:id="@+id/ic_menu_blog"
+        android:title="Blogs"
+        android:icon="@drawable/ic_blog_gray"/>
+
+</menu>
