@@ -75,26 +75,31 @@ public class FragmentTopJob extends Fragment implements ItemRcvClickListener, Fr
 
     @Override
     public void getJobItems(List<JobItem> jobItemList, List<Company> companyList,
-                            List<CountLevel> levelName, List<CountSkill> skillName) {
+                            List<CountLevel> levelName, List<CountSkill> skillName,List<Cate> cateList) {
         this.jobItemList = jobItemList;
         this.companyList = companyList;
 
         if (check == 1) {
             Collections.sort(this.jobItemList);
-            createRcv(jobItemList, companyList, skillName);
+            createRcv(jobItemList, companyList, cateList);
         } else {
-            createRcv(jobItemList, companyList, skillName);
+            createRcv(jobItemList, companyList, cateList);
         }
 
     }
 
     @Override
-    public void getJobItemsFilter(List<JobItem> jobItemList, List<Company> companyList, List<CountSkill> countSkillList) {
+    public void getJobItemsFilter(List<JobItem> jobItemList, List<Company> companyList,
+                                  List<Cate> cateList) {
 
     }
 
-    private void createRcv(List<JobItem> jobItemList, List<Company> companyList, List<CountSkill> countSkillList) {
-        adapterMainRcvJobs = new AdapterMainRcvJobs(jobItemList, companyList, this, countSkillList);
+    @Override
+    public void getError(String error) {
+    }
+
+    private void createRcv(List<JobItem> jobItemList, List<Company> companyList, List<Cate> cateList) {
+        adapterMainRcvJobs = new AdapterMainRcvJobs(jobItemList, companyList, this, cateList);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(RecyclerView.VERTICAL);
         fragmentTopJobsRcvList.setLayoutManager(manager);

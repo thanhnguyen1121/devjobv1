@@ -11,8 +11,10 @@ import java.util.List;
 
 public interface FragmentJobViewImp {
     void getJobItems(List<JobItem> jobItemList, List<Company> companyList,
-                     List<CountLevel> countLevelList, List<CountSkill> countSkillList
+                     List<CountLevel> countLevelList, List<CountSkill> countSkillList,
+                     List<Cate> cateList
     );
 
-    void getJobItemsFilter(List<JobItem> jobItemList, List<Company> companyList, List<CountSkill> countSkillList);
+    void getJobItemsFilter(List<JobItem> jobItemList, List<Company> companyList, List<Cate> cateList);
+    void getError(String error);
 }
