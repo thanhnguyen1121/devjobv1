@@ -43,7 +43,7 @@ public class FragmentJobLogic implements FragmentJobImp {
                     List<Company> listCompany = response.body().getCompanies();
                     List<Cate> listCate = response.body().getCates();
                     faFragmentJobViewImp.getJobItems(jobsList, listCompany,
-                            countLevelList, countSkillList);
+                            countLevelList, countSkillList, listCate);
                 }
             }
 
@@ -78,6 +78,7 @@ public class FragmentJobLogic implements FragmentJobImp {
                     List<String> listCountSkillName = new ArrayList<>();
                     List<String> listCountLevelName = new ArrayList<>();
                     List<CountSkill> countSkillList = response.body().getCountSkill();
+                    List<Cate> listCate = response.body().getCates();
                     for (CountSkill item : countSkillList) {
                         listCountSkillName.add(item.getName());
                     }
@@ -85,13 +86,32 @@ public class FragmentJobLogic implements FragmentJobImp {
                     for (CountLevel item : countLevelList) {
                         listCountLevelName.add(item.getName());
                     }
-                    faFragmentJobViewImp.getJobItemsFilter(jobItemList, companyList, countSkillList);
+                    faFragmentJobViewImp.getJobItemsFilter(jobItemList, companyList, listCate);
                 }
             }
 
             @Override
             public void onFailure(Call<JobInfo> call, Throwable t) {
                 Log.d("aaa", "onFailure: " + t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void getJobByFilter(String url) {
+        ApiUtil.getData().getJobFilter(url).enqueue(new Callback<JobInfo>() {
+            @Override
+            public void onResponse(Call<JobInfo> call, Response<JobInfo> response) {
+                if(response.isSuccessful()){
+                    faFragmentJobViewImp.getJobItemsFilter(response.body().getJobs().getData(),
+                            response.body().getCompanies(),
+                            response.body().getCates());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JobInfo> call, Throwable t) {
+                faFragmentJobViewImp.getError(t.getMessage());
             }
         });
     }

@@ -24,6 +24,7 @@ public class LoginPresenterLogic implements LoginPresenterImp {
                 .enqueue(new Callback<UserStatus>() {
                     @Override
                     public void onResponse(Call<UserStatus> call, Response<UserStatus> response) {
+                        Log.d("aaa", "onResponse: " + response.body());
                         loginActivityViewImp.getUserStatus(response.body());
                     }
 

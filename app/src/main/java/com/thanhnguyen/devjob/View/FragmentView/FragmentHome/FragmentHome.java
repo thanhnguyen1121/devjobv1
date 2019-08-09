@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,27 +12,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.material.tabs.TabLayout;
 import com.thanhnguyen.devjob.Adapter.AdapterFragmentMainHome;
-import com.thanhnguyen.devjob.Model.ModelHome.HomeInfo;
 import com.thanhnguyen.devjob.R;
 import com.thanhnguyen.devjob.Retrofit.ApiUtil;
 import com.thanhnguyen.devjob.Utils.Constant;
-import com.thanhnguyen.devjob.Utils.MyAsynctask;
-import com.thanhnguyen.devjob.View.FragmentView.FragmentBlog.FragmentBlog;
-import com.thanhnguyen.devjob.View.FragmentView.FragmentCourse.FragmentCourse;
-import com.thanhnguyen.devjob.View.FragmentView.FragmentEvent.FragmentEvent;
-import com.thanhnguyen.devjob.View.FragmentView.FragmentJob.FragmentJob;
-import com.thanhnguyen.devjob.View.FragmentView.FragmentTopCompany.FragmentTopCompany;
 import com.thanhnguyen.devjob.View.FragmentView.FragmentTopJob.FragmentTopJob;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,10 +25,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FragmentHome extends Fragment {
 
@@ -67,7 +51,6 @@ public class FragmentHome extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         createControll();
-
     }
 
 

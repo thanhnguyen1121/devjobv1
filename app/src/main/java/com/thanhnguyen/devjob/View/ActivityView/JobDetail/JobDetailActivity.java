@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 
 import com.thanhnguyen.devjob.Model.ModelJobDetail.ModeJobDetailCompany;
 import com.thanhnguyen.devjob.Model.ModelJobDetail.ModelJobDetailDetail;
@@ -22,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class JobDetailActivity extends AppCompatActivity implements JobDetailViewImp {
+public class JobDetailActivity extends AppCompatActivity implements JobDetailViewImp{
 
     @BindView(R.id.jobs_detail_txtName)
     TextView jobsDetailTxtName;
@@ -46,10 +48,12 @@ public class JobDetailActivity extends AppCompatActivity implements JobDetailVie
     TextView jobsDetailTxtBenefit;
     @BindView(R.id.jobs_detail_txtRequirement)
     TextView jobsDetailTxtRequirement;
+    @BindView(R.id.jobs_detail_scollview)
+    NestedScrollView jobsDetailScollview;
 
     private JobDetailPresenterImp jobDetailPresenterImp;
-    private float x1,x2;
-    static final int MIN_DISTANCE = 150;
+    private GestureDetector gestureDetector;
+    private  int Ymin = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +65,14 @@ public class JobDetailActivity extends AppCompatActivity implements JobDetailVie
         jobDetailPresenterImp = new JobDetailPresenterLogic(this);
         jobDetailPresenterImp.getJobDetailInfor(slug, Constant.token);
 
+//        gestureDetector = new GestureDetector(this, new MyGes());
+//        jobsDetailScollview.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                gestureDetector.onTouchEvent(event);
+//                return true;
+//            }
+//        });
 
     }
 
@@ -118,4 +130,13 @@ public class JobDetailActivity extends AppCompatActivity implements JobDetailVie
         }
     }
 
+    class MyGes extends  GestureDetector.SimpleOnGestureListener{
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            if(e2.getY() - e1.getY() > Ymin){
+                Toast.makeText(JobDetailActivity.this, "Scoll Up", Toast.LENGTH_SHORT).show();
+            }
+            return super.onScroll(e1, e2, distanceX, distanceY);
+        }
+    }
 }

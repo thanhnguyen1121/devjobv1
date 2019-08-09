@@ -1,8 +1,5 @@
 package com.thanhnguyen.devjob.Retrofit;
 
-import androidx.annotation.FractionRes;
-
-import com.google.gson.annotations.Expose;
 import com.thanhnguyen.devjob.Model.ModelBlog.BlogInfo;
 import com.thanhnguyen.devjob.Model.ModelCompany.CompanyModel;
 import com.thanhnguyen.devjob.Model.ModelCompanyDetail.ModelCompanyDetail;
@@ -13,7 +10,6 @@ import com.thanhnguyen.devjob.Model.ModelHome.HomeInfo;
 import com.thanhnguyen.devjob.Model.ModelJob.JobInfo;
 import com.thanhnguyen.devjob.Model.ModelJobDetail.ModelJobDetailJobDetail;
 import com.thanhnguyen.devjob.Model.UserModel.RegisterStatus;
-import com.thanhnguyen.devjob.Model.UserModel.UserInfo;
 import com.thanhnguyen.devjob.Model.UserModel.UserStatus;
 
 
@@ -22,7 +18,6 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
 
@@ -101,5 +96,6 @@ public interface DataClient {
     //test get data from job filter
     @GET
     Call<JobInfo> getJobFilter(@Url String url);
+
 
 }

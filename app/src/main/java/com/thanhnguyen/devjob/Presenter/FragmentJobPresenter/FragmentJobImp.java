@@ -8,4 +8,6 @@ public interface FragmentJobImp {
      void getAllJobInfor(int bonus, int total, String search);
 
      void getJobByFilter(String baseUrl, int bonus,int level, int skill);
+
+     void getJobByFilter(String url);
 }

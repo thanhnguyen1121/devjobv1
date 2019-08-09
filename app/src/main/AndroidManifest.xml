@@ -20,7 +20,9 @@
         <activity android:name=".View.ActivityView.CompanyDetailActivity.CompanyActivityDetail" />
         <activity android:name=".View.ActivityView.ForgotPasswordActivity.ForgotActivity" />
         <activity android:name=".View.ActivityView.RegisterActivity.RegisterActivity" />
-        <activity android:name=".View.ActivityView.LoginActivity.LoginActivity" />
+        <activity android:name=".View.ActivityView.LoginActivity.LoginActivity">
+
+        </activity>
         <activity android:name=".View.ActivityView.UserActivity.Refer.ReferActivity" />
         <activity android:name=".View.ActivityView.UserActivity.Employee.EmployeeActivity" />
         <activity android:name=".View.ActivityView.UserActivity.Candidate.CadidateActivity" />

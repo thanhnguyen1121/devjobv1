@@ -9,6 +9,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -39,15 +41,15 @@ public class AdapterMainRcvJobs extends RecyclerView.Adapter<AdapterMainRcvJobs.
     private List<JobItem> jobItemList;
     private List<Company> companyList;
     private ItemRcvClickListener listener;
-    List<CountSkill> countSkillList;
+    List<Cate> cateList;
     View view;
 
     public AdapterMainRcvJobs(List<JobItem> jobItemList, List<Company> companyList,
-                              ItemRcvClickListener listener, List<CountSkill> countSkillList) {
+                              ItemRcvClickListener listener, List<Cate> cateList) {
         this.jobItemList = jobItemList;
         this.companyList = companyList;
         this.listener = listener;
-        this.countSkillList = countSkillList;
+        this.cateList = cateList;
     }
 
     @NonNull
@@ -70,18 +72,14 @@ public class AdapterMainRcvJobs extends RecyclerView.Adapter<AdapterMainRcvJobs.
         holder.txtAddress.setText(jobItem.getAddress_job());
 
         if (jobItem.getFeature() == 1) {
-            holder.txtIsHotJob.setRotation(-45);
-            holder.txtIsHotJob.setVisibility(View.VISIBLE);
+            holder.txtHotJob.setRotation(-45);
+            holder.txtHotJob.setVisibility(View.VISIBLE);
+            holder.rlIsHotJob.setVisibility(View.VISIBLE);
         } else {
-            holder.txtIsHotJob.setVisibility(View.GONE);
+            holder.txtHotJob.setVisibility(View.GONE);
+            holder.rlIsHotJob.setVisibility(View.GONE);
         }
 
-        holder.imgFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createDialogConfirm();
-            }
-        });
 
         if (jobItem.getSalaryMin() != null || jobItem.getSalaryMin() != null) {
             holder.txtDeal.setText(jobItem.getSalaryMin() + "-" + jobItem.getSalaryMax() + " USD");
@@ -92,9 +90,34 @@ public class AdapterMainRcvJobs extends RecyclerView.Adapter<AdapterMainRcvJobs.
         }
 
 
-        CountSkill skill = getCountSkillByCateId(jobItem.getCateId(), countSkillList);
+        List<Cate> listTag = getCountSkillByCateId(jobItem.getJobId(), cateList);
+        int listTagSize = listTag.size();
+        switch (listTagSize) {
+            case 1:
+                holder.txtLaguageName1.setText(listTag.get(0).getName());
+                break;
+            case 2:
+                holder.txtLaguageName2.setVisibility(View.VISIBLE);
+                holder.txtLaguageName1.setText(listTag.get(0).getName());
+                holder.txtLaguageName2.setText(listTag.get(1).getName());
+                break;
+            case 3:
+                holder.txtLaguageName2.setVisibility(View.VISIBLE);
+                holder.txtLaguageName3.setVisibility(View.VISIBLE);
+                holder.txtLaguageName1.setText(listTag.get(0).getName());
+                holder.txtLaguageName2.setText(listTag.get(1).getName());
+                holder.txtLaguageName3.setText(listTag.get(2).getName());
+                break;
+        }
 
-        holder.txtLaguageName.setText(skill.getName());
+
+        holder.imgFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createDialogConfirm();
+            }
+        });
+
         holder.lnMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,10 +136,11 @@ public class AdapterMainRcvJobs extends RecyclerView.Adapter<AdapterMainRcvJobs.
 
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imgLogoCompany, imgFavorite, txtIsHotJob;
+        private ImageView imgLogoCompany, imgFavorite;
         private TextView txtCompanyName, txtTiltle, txtAddress, txtDeal, txtTimeStart,
-                txtLaguageName;
+                txtLaguageName1, txtLaguageName2, txtLaguageName3, txtHotJob;
         private LinearLayout lnMain;
+        private RelativeLayout rlIsHotJob;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -125,23 +149,17 @@ public class AdapterMainRcvJobs extends RecyclerView.Adapter<AdapterMainRcvJobs.
             txtAddress = itemView.findViewById(R.id.item_rcv_main_jobs_address);
             txtDeal = itemView.findViewById(R.id.item_rcv_main_jobs_deal);
             txtTimeStart = itemView.findViewById(R.id.item_rcv_main_jobs_timestart);
-            txtLaguageName = itemView.findViewById(R.id.item_rcv_main_jobs_language);
+            txtLaguageName1 = itemView.findViewById(R.id.item_rcv_main_jobs_language1);
+            txtLaguageName2 = itemView.findViewById(R.id.item_rcv_main_jobs_language2);
+            txtLaguageName3 = itemView.findViewById(R.id.item_rcv_main_jobs_language3);
             lnMain = itemView.findViewById(R.id.item_rcv_main_jobs_lnMain);
             txtCompanyName = itemView.findViewById(R.id.item_rcv_main_jobs_company_name);
             imgFavorite = itemView.findViewById(R.id.item_rcv_main_jobs_favorite);
-            txtIsHotJob = itemView.findViewById(R.id.item_rcv_main_job_is_hot);
+            txtHotJob = itemView.findViewById(R.id.txt_hot_job);
+            rlIsHotJob = itemView.findViewById(R.id.rl_is_hot_job);
         }
     }
 
-    //    private Company getCompany(int idCompany, List<Company> companyList) {
-//        for (Company item : companyList
-//        ) {
-//            if (idCompany == item.getId()) {
-//                return item;
-//            }
-//        }
-//        return null;
-//    }
     private Company getCompany(String companyaName, List<Company> companyList) {
         for (Company item : companyList
         ) {
@@ -152,14 +170,14 @@ public class AdapterMainRcvJobs extends RecyclerView.Adapter<AdapterMainRcvJobs.
         return null;
     }
 
-    private CountSkill getCountSkillByCateId(int id, List<CountSkill> countSkillList) {
-        for (CountSkill item : countSkillList
-        ) {
-            if (id == item.getCateId()) {
-                return item;
+    private List<Cate> getCountSkillByCateId(int jobId, List<Cate> cateList) {
+        List<Cate> temp = new ArrayList<>();
+        for (Cate item : cateList) {
+            if (jobId == item.getJobId()) {
+                temp.add(item);
             }
         }
-        return null;
+        return temp;
     }
 
     private void createDialogConfirm() {
