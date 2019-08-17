@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/ic_dashboard"
+            android:icon="@drawable/ic_dashboard_black"
+            android:title="Dashboard"/>
+        <item
+            android:id="@+id/favorite"
+            android:icon="@drawable/ic_bookmark_bkack"
+            android:title="Favorite List"/>
+        <item
+            android:id="@+id/ic_candidate"
+            android:icon="@drawable/ic_profile_black"
+            android:title="Canditate Profile"/>
+        <item
+            android:id="@+id/ic_upload_cv"
+            android:icon="@drawable/ic_upload_black"
+            android:title="Upload CV"/>
+        <item
+            android:id="@+id/ic_change_password"
+            android:icon="@drawable/ic_http_black"
+            android:title="Change Password"/>
+        <item
+            android:id="@+id/ic_logout"
+            android:icon="@drawable/ic_logout_black"
+            android:title="Logout"/>
+    </group>
+
+</menu>

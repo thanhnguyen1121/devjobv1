@@ -1,3 +1,27 @@
 <resources>
     <string name="app_name">DevJob</string>
+    <string name="draw_open">open</string>
+    <string name="draw_close">close</string>
+
+    <string-array name="array_number">
+        <item>10</item>
+        <item>25</item>
+        <item>50</item>
+        <item>100</item>
+    </string-array>
+
+    <string-array name="array_sort">
+        <item>Oldest</item>
+        <item>Lasted</item>
+    </string-array>
+
+    <string-array name="array_interview">
+        <item>All</item>
+        <item>Pending</item>
+        <item>Rejected InterView</item>
+        <item>Waiting for InterView</item>
+        <item>Passed InterView</item>
+        <item>Failed InterView</item>
+    </string-array>
+    <string name="title_activity_maps">Map</string>
 </resources>

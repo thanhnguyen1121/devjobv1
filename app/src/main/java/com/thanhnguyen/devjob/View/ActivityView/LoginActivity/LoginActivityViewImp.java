@@ -1,5 +1,6 @@
 package com.thanhnguyen.devjob.View.ActivityView.LoginActivity;
 
+import com.thanhnguyen.devjob.Model.UserModel.UserInfo;
 import com.thanhnguyen.devjob.Model.UserModel.UserStatus;
 
 public interface LoginActivityViewImp {

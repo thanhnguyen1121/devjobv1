@@ -34,6 +34,7 @@ public class FragmentJobLogic implements FragmentJobImp {
             @Override
             public void onResponse(Call<JobInfo> call, Response<JobInfo> response) {
                 if (response.isSuccessful()) {
+                    Log.d("ddd", "sucess: " + response.body());
                     List<CountSkill> countSkillList = new ArrayList<>();
                     List<CountLevel> countLevelList = new ArrayList<>();
                     countSkillList = response.body().getCountSkill();

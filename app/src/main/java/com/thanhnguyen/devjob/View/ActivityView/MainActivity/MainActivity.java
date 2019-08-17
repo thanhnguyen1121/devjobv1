@@ -31,6 +31,7 @@ import com.thanhnguyen.devjob.View.FragmentView.FragmentCompany.FragmentCompany;
 import com.thanhnguyen.devjob.View.FragmentView.FragmentEvent.FragmentEvent;
 import com.thanhnguyen.devjob.View.FragmentView.FragmentHome.FragmentHome;
 import com.thanhnguyen.devjob.View.FragmentView.FragmentJob.FragmentJob;
+import com.thanhnguyen.devjob.View.FragmentView.FragmentMap.FragmentMapJob;
 import com.thanhnguyen.devjob.View.FragmentView.FragmentMore.FragmentMore;
 
 import org.json.JSONObject;
@@ -115,6 +116,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 4:
                 fragment = new FragmentBlog();
+                break;
+            case 5:
+                fragment = new FragmentMapJob();
                 break;
         }
         fragmentTransaction.replace(R.id.main_frame, fragment);

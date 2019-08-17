@@ -1,119 +1,84 @@
 package com.thanhnguyen.devjob.View.ActivityView.UserActivity.Candidate;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.jaredrummler.materialspinner.MaterialSpinner;
-import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-import com.thanhnguyen.devjob.Adapter.AdapterSlidingMenu;
-import com.thanhnguyen.devjob.Model.ItemSlidingMenu;
-import com.thanhnguyen.devjob.Presenter.Interface.ItemRcvClickListener;
+import com.google.android.material.navigation.NavigationView;
 import com.thanhnguyen.devjob.R;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.thanhnguyen.devjob.View.FragmentView.FragmentCandidateDashBoard.FragmentCandidateProfile.FragmentCandidateProfile;
+import com.thanhnguyen.devjob.View.FragmentView.FragmentCandidateDashBoard.FragmentChangePassword;
+import com.thanhnguyen.devjob.View.FragmentView.FragmentCandidateDashBoard.FragmentDashBoard.FragmentDashBoard;
+import com.thanhnguyen.devjob.View.FragmentView.FragmentCandidateDashBoard.FragmentFavorite;
+import com.thanhnguyen.devjob.View.FragmentView.FragmentCandidateDashBoard.FragmentUploadCV;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-public class CadidateActivity extends AppCompatActivity implements ItemRcvClickListener {
+public class CadidateActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
-    @BindView(R.id.user_titles)
-    TextView userTitles;
-    @BindView(R.id.spinnerTime)
-    MaterialSpinner spinnerTime;
-    @BindView(R.id.spinnerStatus)
-    MaterialSpinner spinnerStatus;
-
-
-    private SlidingMenu menu;
-    private List<ItemSlidingMenu> menuList;
-    private List<ItemSlidingMenu> menuListSelected;
-    private AdapterSlidingMenu adapterSlidingMenu;
-
+    @BindView(R.id.navigation)
+    NavigationView navigationView;
+    @BindView(R.id.draw_layout)
+    DrawerLayout drawerLayout;
+    @BindView(R.id.tool_bar)
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadidate);
         ButterKnife.bind(this);
-        //setSupportActionBar(userToolbar);
-        menu = new SlidingMenu(this);
-        menuList = new ArrayList<>();
-        menuListSelected = new ArrayList<>();
-        createSlidingMenu(menu);
-        spinnerTime.setItems("Oldest", "Lasted");
-        spinnerTime.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                Toast.makeText(CadidateActivity.this, item +"", Toast.LENGTH_SHORT).show();
-            }
-        });
-        spinnerStatus.setItems("All","Pending","Rejected Interview","Waiting for interview","Passed interview", "Failed interview");
-        spinnerStatus.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                Toast.makeText(CadidateActivity.this, item +"", Toast.LENGTH_SHORT).show();
-            }
-        });
+        setNavigation();
+
     }
 
-    private void createSlidingMenu(SlidingMenu menu) {
-        menuList.add(new ItemSlidingMenu(R.drawable.ic_dashboard_black, "DashBoard", true));
-        menuList.add(new ItemSlidingMenu(R.drawable.ic_bookmark_bkack, "Favorite", false));
-        menuList.add(new ItemSlidingMenu(R.drawable.ic_profile_black, "Profile", false));
-        menuList.add(new ItemSlidingMenu(R.drawable.ic_upload_black, "Upload CV", false));
-        menuList.add(new ItemSlidingMenu(R.drawable.ic_http_black, "Change Password", false));
-        menuList.add(new ItemSlidingMenu(R.drawable.ic_logout_black, "Log out", false));
+    private void setNavigation() {
+        setSupportActionBar(toolbar);
+        navigationView.setNavigationItemSelectedListener(this);
 
-        menuListSelected.add(new ItemSlidingMenu(R.drawable.ic_dashboard, "DashBoard", true));
-        menuListSelected.add(new ItemSlidingMenu(R.drawable.ic_bookmark_blue, "Favorite", false));
-        menuListSelected.add(new ItemSlidingMenu(R.drawable.ic_profile_blue, "Profile", false));
-        menuListSelected.add(new ItemSlidingMenu(R.drawable.ic_upload_blue, "Upload CV", false));
-        menuListSelected.add(new ItemSlidingMenu(R.drawable.ic_http_blue, "Change Password", false));
-        menuListSelected.add(new ItemSlidingMenu(R.drawable.ic_logout_blue, "Log out", false));
-
-        menu.setMode(SlidingMenu.LEFT);
-        //menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-        menu.setShadowWidthRes(R.dimen._5sdp);
-        menu.setShadowDrawable(R.drawable.shadow);
-        menu.setBehindOffsetRes(R.dimen._100sdp);
-        menu.setFadeDegree(0.35f);
-        menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-        menu.setMenu(R.layout.sliding_menu);
-        RecyclerView rcvSlidingMenu = menu.findViewById(R.id.rcv_slidingMenu);
-        adapterSlidingMenu = new AdapterSlidingMenu(this, menuList, menuListSelected, this);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        manager.setOrientation(RecyclerView.VERTICAL);
-        rcvSlidingMenu.setLayoutManager(manager);
-        rcvSlidingMenu.setAdapter(adapterSlidingMenu);
-    }
-
-    @OnClick(R.id.user_menu)
-    public void onViewClicked() {
-        menu.toggle();
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.draw_open,R.string.draw_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+        getSupportFragmentManager().beginTransaction().replace(R.id.lnlayout,new FragmentDashBoard()).commit();
     }
 
     @Override
-    public void clickedItem(int position) {
-        for (ItemSlidingMenu item : menuList) {
-            item.setSelected(false);
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch (menuItem.getItemId()){
+            case R.id.ic_dashboard:
+                getSupportFragmentManager().beginTransaction().replace(R.id.lnlayout,new FragmentDashBoard()).commit();
+                break;
+            case R.id.favorite:
+                getSupportFragmentManager().beginTransaction().replace(R.id.lnlayout,new FragmentFavorite()).commit();
+                break;
+            case R.id.ic_candidate:
+                getSupportFragmentManager().beginTransaction().replace(R.id.lnlayout,new FragmentCandidateProfile()).commit();
+                break;
+            case R.id.ic_upload_cv:
+                getSupportFragmentManager().beginTransaction().replace(R.id.lnlayout,new FragmentUploadCV()).commit();
+                break;
+            case R.id.ic_change_password:
+                getSupportFragmentManager().beginTransaction().replace(R.id.lnlayout,new FragmentChangePassword()).commit();
+                break;
+            case R.id.ic_logout:
+                break;
         }
-        menuList.get(position).setSelected(true);
-        userTitles.setText(menuList.get(position).getContent());
-        adapterSlidingMenu.notifyDataSetChanged();
-        menu.toggle();
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }else {
+            super.onBackPressed();
+        }
     }
 }

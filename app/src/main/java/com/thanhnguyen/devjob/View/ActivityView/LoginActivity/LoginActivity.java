@@ -3,7 +3,6 @@ package com.thanhnguyen.devjob.View.ActivityView.LoginActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -12,12 +11,13 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.thanhnguyen.devjob.Model.LoginPresenter.LoginPresenterImp;
-import com.thanhnguyen.devjob.Model.LoginPresenter.LoginPresenterLogic;
+import com.thanhnguyen.devjob.Presenter.LoginPresenter.LoginPresenterImp;
+import com.thanhnguyen.devjob.Presenter.LoginPresenter.LoginPresenterLogic;
 import com.thanhnguyen.devjob.Model.UserModel.UserStatus;
 import com.thanhnguyen.devjob.R;
 import com.thanhnguyen.devjob.Utils.Constant;
 import com.thanhnguyen.devjob.View.ActivityView.RegisterActivity.RegisterActivity;
+import com.thanhnguyen.devjob.View.ActivityView.UserActivity.Candidate.CadidateActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -91,14 +91,14 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
     @Override
     public void getUserStatus(UserStatus userStatus) {
 
-        Log.d("aaa", "getUserStatus: " + userStatus.toString());
+       // Log.d("aaa", "getUserStatus: " + userStatus.toString());
         if (userStatus.getId() == null) {
             Toast.makeText(this, "Sai tên tài khoản hoặc mật khẩu!", Toast.LENGTH_SHORT).show();
         } else {
             saveUserEmaiAndPass(loginCbRemember.isChecked());
-            Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(LoginActivity.this, CadidateActivity.class);
+            startActivity(intent);
         }
-
     }
 
     @Override

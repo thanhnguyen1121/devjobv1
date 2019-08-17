@@ -20,5 +20,10 @@
         <item name="colorControlNormal">@color/colorLine</item>
     </style>
 
+    <style name="App" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/custom_primary</item>
+        <item name="colorPrimaryDark">@color/custom_primaryDark</item>
+    </style>
+
 
 </resources>

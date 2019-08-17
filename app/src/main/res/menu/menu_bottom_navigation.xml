@@ -20,5 +20,9 @@
         android:id="@+id/ic_menu_blog"
         android:title="Blogs"
         android:icon="@drawable/ic_blog_gray"/>
+    <item
+        android:id="@+id/ic_map_job"
+        android:title="Map"
+        android:icon="@drawable/ic_map_black_24dp"/>
 
 </menu>

@@ -6,13 +6,16 @@
     <color name="bgColorWhite">#FFFFFF</color>
     <color name="bgColorMenuDefault">#888888</color>
     <color name="bgColorMenuSelected">#0091EA</color>
-    <color name="colorBlack">#000</color>
+    <color name="colorBlack">#000000</color>
     <color name="colorLine">#EEEEEE</color>
     <color name="colorBorder">#EFEBE9</color>
     <color name="textHintColor">#9E9B9B</color>
     <color name="colorGray">#DBDBDB</color>
     <color name="colorLightGray">#F3F3F3</color>
     <color name="colorRed">#F00000</color>
+    <color name="custom_primary">#2196F3</color>
+    <color name="custom_primaryDark">#1976D2</color>
+    <color name="custom_color">#9C27B0</color>
 
 
 

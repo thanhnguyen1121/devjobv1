@@ -17,6 +17,7 @@ public class Constant {
     public static int RESULT_CODE_SEARCH_MORE = 4;
     public static int RESULT_CODE_SEARCH_MORE_COMPANY = 5;
     public static int REQUEST_CODE_SEARCH_MORE_COMPANY = 6;
+    public static final int CODE_GET_LOCATION = 5476;
 
 
 
