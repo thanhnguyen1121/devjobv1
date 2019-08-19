@@ -12,16 +12,42 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.thanhnguyen.devjob.Model.LoginPresenter.LoginPresenterImp;
 import com.thanhnguyen.devjob.Model.LoginPresenter.LoginPresenterLogic;
+import com.thanhnguyen.devjob.Model.StatusAfterLogin;
+import com.thanhnguyen.devjob.Model.UserModel.UserLoginInfo;
 import com.thanhnguyen.devjob.Model.UserModel.UserStatus;
 import com.thanhnguyen.devjob.R;
+import com.thanhnguyen.devjob.Retrofit.ApiUtil;
 import com.thanhnguyen.devjob.Utils.Constant;
 import com.thanhnguyen.devjob.View.ActivityView.RegisterActivity.RegisterActivity;
+
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.security.cert.CertificateException;
+import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity implements LoginActivityViewImp {
 
@@ -97,12 +123,26 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
         } else {
             saveUserEmaiAndPass(loginCbRemember.isChecked());
             Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-        }
 
+            ApiUtil.getData().getStatusUserLogin(Constant.token).enqueue(new Callback<UserLoginInfo>() {
+                @Override
+                public void onResponse(Call<UserLoginInfo> call, Response<UserLoginInfo> response) {
+                    Log.d("bbb", "onResponse: " + response);
+                }
+
+                @Override
+                public void onFailure(Call<UserLoginInfo> call, Throwable t) {
+                    Log.d("bbb", "onFailure: " + t.getMessage());
+                }
+            });
+
+        }
     }
 
     @Override
     public void getError(String mes) {
 
     }
+    //////////////////////////////////////
+
 }

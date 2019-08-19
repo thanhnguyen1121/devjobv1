@@ -23,12 +23,18 @@ public class ModelJobDetailDetail {
     @SerializedName("address")
     @Expose
     private String address;
+    @SerializedName("lat")
+    @Expose
+    private String lat;
+    @SerializedName("lng")
+    @Expose
+    private String lng;
     @SerializedName("salary_min")
     @Expose
-    private Integer salaryMin;
+    private int salaryMin;
     @SerializedName("salary_max")
     @Expose
-    private Integer salaryMax;
+    private int salaryMax;
     @SerializedName("level_job")
     @Expose
     private Integer levelJob;
@@ -132,19 +138,35 @@ public class ModelJobDetailDetail {
         this.address = address;
     }
 
-    public Integer getSalaryMin() {
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
+
+    public int getSalaryMin() {
         return salaryMin;
     }
 
-    public void setSalaryMin(Integer salaryMin) {
+    public void setSalaryMin(int salaryMin) {
         this.salaryMin = salaryMin;
     }
 
-    public Integer getSalaryMax() {
+    public int getSalaryMax() {
         return salaryMax;
     }
 
-    public void setSalaryMax(Integer salaryMax) {
+    public void setSalaryMax(int salaryMax) {
         this.salaryMax = salaryMax;
     }
 
@@ -291,5 +313,4 @@ public class ModelJobDetailDetail {
     public void setName(String name) {
         this.name = name;
     }
-
 }

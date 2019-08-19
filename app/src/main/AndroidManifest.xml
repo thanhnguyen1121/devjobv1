@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".View.ActivityView.CompanyViewSearchMore.CompanySearchMoreActivity"></activity>
+        <activity android:name=".View.ActivityView.CompanyViewSearchMore.CompanySearchMoreActivity" />
         <activity android:name=".View.ActivityView.searchJobOptionActivity.SearchJobOptionActivity" />
         <activity android:name=".View.ActivityView.CourseDetailActivity.CourseDetailActivity" />
         <activity android:name=".View.ActivityView.BlogDetailActivity.BlogDetailActivity" />
@@ -20,9 +20,7 @@
         <activity android:name=".View.ActivityView.CompanyDetailActivity.CompanyActivityDetail" />
         <activity android:name=".View.ActivityView.ForgotPasswordActivity.ForgotActivity" />
         <activity android:name=".View.ActivityView.RegisterActivity.RegisterActivity" />
-        <activity android:name=".View.ActivityView.LoginActivity.LoginActivity">
-
-        </activity>
+        <activity android:name=".View.ActivityView.LoginActivity.LoginActivity"></activity>
         <activity android:name=".View.ActivityView.UserActivity.Refer.ReferActivity" />
         <activity android:name=".View.ActivityView.UserActivity.Employee.EmployeeActivity" />
         <activity android:name=".View.ActivityView.UserActivity.Candidate.CadidateActivity" />

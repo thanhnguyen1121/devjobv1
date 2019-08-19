@@ -4,11 +4,19 @@ package com.thanhnguyen.devjob.Model.ModelJobDetail;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class ModelJobDetailJobRelate {
 
     @SerializedName("id")
     @Expose
     private Integer id;
+    @SerializedName("feature")
+    @Expose
+    private Integer feature;
+    @SerializedName("bonus")
+    @Expose
+    private Integer bonus;
     @SerializedName("slug")
     @Expose
     private String slug;
@@ -30,6 +38,9 @@ public class ModelJobDetailJobRelate {
     @SerializedName("type")
     @Expose
     private Integer type;
+    @SerializedName("skills")
+    @Expose
+    private List<ModelJobDetailSkill> ModelJobDetailSkills = null;
 
     public Integer getId() {
         return id;
@@ -37,6 +48,22 @@ public class ModelJobDetailJobRelate {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getFeature() {
+        return feature;
+    }
+
+    public void setFeature(Integer feature) {
+        this.feature = feature;
+    }
+
+    public Integer getBonus() {
+        return bonus;
+    }
+
+    public void setBonus(Integer bonus) {
+        this.bonus = bonus;
     }
 
     public String getSlug() {
@@ -93,6 +120,14 @@ public class ModelJobDetailJobRelate {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public List<ModelJobDetailSkill> getModelJobDetailSkills() {
+        return ModelJobDetailSkills;
+    }
+
+    public void setModelJobDetailSkills(List<ModelJobDetailSkill> ModelJobDetailSkills) {
+        this.ModelJobDetailSkills = ModelJobDetailSkills;
     }
 
 }

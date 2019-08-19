@@ -19,12 +19,13 @@ import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.http.Url;
 
-public class MyAsynctask extends AsyncTask<Url , Integer, String> {
+public class MyAsynctask extends AsyncTask<Url, Integer, String> {
     private Activity activity;
     private String url;
 
     private OkHttpClient client;
     private Request request;
+
     public MyAsynctask(Activity activity, String url) {
         this.activity = activity;
         this.url = url;
@@ -47,7 +48,7 @@ public class MyAsynctask extends AsyncTask<Url , Integer, String> {
                 return null;
             }
             response.body();
-return "";
+            return "";
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -62,7 +63,7 @@ return "";
     @Override
     protected void onPostExecute(String aVoid) {
         super.onPostExecute(aVoid);
-        if(aVoid != null){
+        if (aVoid != null) {
             Log.d("aaa", "onPostExecute: " + aVoid);
         }
     }

@@ -16,10 +16,10 @@ public class ModelJobDetailJobDetail {
     private ModeJobDetailCompany company;
     @SerializedName("job_relate")
     @Expose
-    private List<List<ModelJobDetailJobRelate>> jobRelate = null;
-    @SerializedName("tags")
+    private List<ModelJobDetailJobRelate> ModelJobDetailJobRelate = null;
+    @SerializedName("ModelJobDetailTags")
     @Expose
-    private List<ModelJobDetailTag> tags = null;
+    private List<ModelJobDetailTag> ModelJobDetailTags = null;
     @SerializedName("r")
     @Expose
     private Integer r;
@@ -55,20 +55,20 @@ public class ModelJobDetailJobDetail {
         this.company = company;
     }
 
-    public List<List<ModelJobDetailJobRelate>> getJobRelate() {
-        return jobRelate;
+    public List<ModelJobDetailJobRelate> getModelJobDetailJobRelate() {
+        return ModelJobDetailJobRelate;
     }
 
-    public void setJobRelate(List<List<ModelJobDetailJobRelate>> jobRelate) {
-        this.jobRelate = jobRelate;
+    public void setModelJobDetailJobRelate(List<ModelJobDetailJobRelate> ModelJobDetailJobRelate) {
+        this.ModelJobDetailJobRelate = ModelJobDetailJobRelate;
     }
 
-    public List<ModelJobDetailTag> getTags() {
-        return tags;
+    public List<ModelJobDetailTag> getModelJobDetailTags() {
+        return ModelJobDetailTags;
     }
 
-    public void setTags(List<ModelJobDetailTag> tags) {
-        this.tags = tags;
+    public void setModelJobDetailTags(List<ModelJobDetailTag> ModelJobDetailTags) {
+        this.ModelJobDetailTags = ModelJobDetailTags;
     }
 
     public Integer getR() {
