@@ -25,7 +25,11 @@ public class JobDetailPresenterLogic implements JobDetailPresenterImp {
             @Override
             public void onResponse(Call<ModelJobDetailJobDetail> call, Response<ModelJobDetailJobDetail> response) {
                 if(response.isSuccessful()){
-                    jobDetailViewImp.getData(response.body().getDetail(), response.body().getCompany());
+                    Log.d("aaa", "onResponse: "  +response.body() );
+                    jobDetailViewImp.getData(response.body().getDetail(), response.body().getCompany(),
+                            response.body().getModelJobDetailJobRelate());
+                }else{
+                    Log.d("aaa", "onResponse: " + response.message());
                 }
             }
 

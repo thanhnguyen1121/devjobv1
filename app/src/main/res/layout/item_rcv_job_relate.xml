@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:background="@drawable/custom_block_pressed_background">
+
+        <RelativeLayout
+            android:id="@+id/rl_is_hot_job"
+            android:background="@drawable/custom_top_job_hot"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp">
+            <TextView
+                android:id="@+id/relate_job_txt_hot_job"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_3sdp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:text="HOT"
+                android:textSize="@dimen/_10ssp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/item_rcv_main_jobs_lnMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/_5sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/item_rcv_relate_job_avatar"
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:layout_gravity="center"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/anh_dep" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/_5sdp">
+
+                <TextView
+                    android:id="@+id/item_rcv_relate_job_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center"
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:padding="@dimen/_1sdp"
+                    android:text="Tuyển dụng nhân viên"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_10ssp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_70sdp"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_1sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1.2 ">
+
+                            <ImageView
+                                android:layout_width="@dimen/_12sdp"
+                                android:layout_height="@dimen/_12sdp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="@dimen/_3sdp"
+                                android:src="@drawable/ic_company_blue" />
+
+                            <TextView
+                                android:id="@+id/item_rcv_relate_job_company_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="@dimen/_2sdp"
+                                android:gravity="center_vertical"
+                                android:lines="1"
+                                android:text="Talent Wins"
+                                android:textColor="@color/colorTextNameCompany"
+                                android:textSize="@dimen/_9ssp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1.2 ">
+
+                            <ImageView
+                                android:layout_width="@dimen/_12sdp"
+                                android:layout_height="@dimen/_12sdp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="@dimen/_3sdp"
+                                android:src="@drawable/ic_location_blue" />
+
+                            <TextView
+                                android:id="@+id/item_rcv_relate_job_address"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="@dimen/_2sdp"
+                                android:gravity="center_vertical"
+                                android:lines="1"
+                                android:text="Đà nẵng"
+                                android:textColor="@color/colorTextNameCompany"
+                                android:textSize="@dimen/_9ssp" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/_1sdp"
+                            android:layout_weight="1.2">
+
+                            <ImageView
+                                android:layout_width="@dimen/_12sdp"
+                                android:layout_height="@dimen/_12sdp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="@dimen/_3sdp"
+                                android:src="@drawable/ic_bonus_gray" />
+
+                            <TextView
+                                android:id="@+id/item_rcv_relate_job_bonus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="@dimen/_3sdp"
+                                android:text="50000000 USD"
+                                android:textColor="@color/colorTextNameCompany"
+                                android:textSize="@dimen/_8ssp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/_1sdp"
+                            android:layout_weight="1.2">
+
+                            <ImageView
+                                android:layout_width="@dimen/_12sdp"
+                                android:layout_height="@dimen/_12sdp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="@dimen/_3sdp"
+                                android:src="@drawable/ic_calender_blue" />
+
+                            <TextView
+                                android:id="@+id/item_rcv_relate_job_timestart"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="@dimen/_2sdp"
+                                android:text="11 days ago"
+                                android:textColor="@color/colorTextNameCompany"
+                                android:textSize="@dimen/_8ssp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4">
+
+                        <ImageView
+                            android:id="@+id/item_rcv_relate_job_favorite"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/ic_favorite" />
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/item_rcv_relate_job_language1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_3sdp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:background="@drawable/custom_block_radius_3sdp_border_blue"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_2sdp"
+                        android:paddingRight="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_2sdp"
+                        android:text="Node js"
+                        android:textColor="@color/colorTextNameCompany"
+                        android:textSize="@dimen/_9ssp" />
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/item_rcv_relate_job_language2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_3sdp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:background="@drawable/custom_block_radius_3sdp_border_blue"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_2sdp"
+                        android:paddingRight="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_2sdp"
+                        android:text="Node js"
+                        android:textColor="@color/colorTextNameCompany"
+                        android:textSize="@dimen/_9ssp" />
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/item_rcv_relate_job_language3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_3sdp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:background="@drawable/custom_block_radius_3sdp_border_blue"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_2sdp"
+                        android:paddingRight="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_2sdp"
+                        android:text="Node js"
+                        android:textColor="@color/colorTextNameCompany"
+                        android:textSize="@dimen/_9ssp" />
+
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

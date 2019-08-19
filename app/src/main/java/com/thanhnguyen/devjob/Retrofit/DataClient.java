@@ -9,7 +9,9 @@ import com.thanhnguyen.devjob.Model.ModelEventDetail.ModeEventDetailInfo;
 import com.thanhnguyen.devjob.Model.ModelHome.HomeInfo;
 import com.thanhnguyen.devjob.Model.ModelJob.JobInfo;
 import com.thanhnguyen.devjob.Model.ModelJobDetail.ModelJobDetailJobDetail;
+import com.thanhnguyen.devjob.Model.StatusAfterLogin;
 import com.thanhnguyen.devjob.Model.UserModel.RegisterStatus;
+import com.thanhnguyen.devjob.Model.UserModel.UserLoginInfo;
 import com.thanhnguyen.devjob.Model.UserModel.UserStatus;
 
 
@@ -97,5 +99,11 @@ public interface DataClient {
     @GET
     Call<JobInfo> getJobFilter(@Url String url);
 
+    //check permisstion
+    @GET("api/candidate-auth")
+    Call<StatusAfterLogin> getxxxx(@Query("token") String token);
+
+    @GET("api/auth")
+    Call<UserLoginInfo> getStatusUserLogin(@Query("token") String key);
 
 }

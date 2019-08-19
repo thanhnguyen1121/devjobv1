@@ -20,5 +20,9 @@
         <item name="colorControlNormal">@color/colorLine</item>
     </style>
 
+    <style name="styleX">
+        <item name="android:textSize">10sp</item>
+    </style>
+
 
 </resources>
