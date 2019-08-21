@@ -6,12 +6,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.print.PrintAttributes;
 import android.text.Html;
+import android.text.InputType;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -22,6 +24,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.transition.ChangeBounds;
+import androidx.transition.TransitionManager;
+import androidx.transition.TransitionSet;
 
 import com.thanhnguyen.devjob.Adapter.AdapterJobRelate;
 import com.thanhnguyen.devjob.Model.ModelJobDetail.ModeJobDetailCompany;
@@ -40,7 +46,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class JobDetailActivity extends AppCompatActivity implements JobDetailViewImp,
-        ItemRcvClickListener, GestureDetector.OnGestureListener {
+        ItemRcvClickListener, GestureDetector.OnGestureListener, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.jobs_detail_txtName)
     TextView jobsDetailTxtName;
@@ -76,10 +82,14 @@ public class JobDetailActivity extends AppCompatActivity implements JobDetailVie
     NestedScrollView scrollView;
     @BindView(R.id.ln_controll_button)
     LinearLayout lnControll;
+    @BindView(R.id.ln_main_job_main)
+    RelativeLayout rlMainJobMain;
+    @BindView(R.id.swipe_refresh_job_detail)
+    SwipeRefreshLayout swipeRefesh;
 
     private JobDetailPresenterImp jobDetailPresenterImp;
     private List<ModelJobDetailJobRelate> relateList;
-    private int Ymin = 100, speed = 400;
+    private int Ymin = 10, speed = 400;
     private int heightHeader;
     private GestureDetector gestureDetector;
 
@@ -88,6 +98,8 @@ public class JobDetailActivity extends AppCompatActivity implements JobDetailVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_detail);
         ButterKnife.bind(this);
+        rlMainJobMain.setVisibility(View.GONE);
+        swipeRefesh.setRefreshing(true);
         Intent intent = getIntent();
         String slug = intent.getStringExtra("slug");
         jobDetailPresenterImp = new JobDetailPresenterLogic(this);
@@ -107,51 +119,66 @@ public class JobDetailActivity extends AppCompatActivity implements JobDetailVie
             @Override
             public void onScrollChanged() {
                 if (scrollView != null) {
-                    if (scrollView.getScrollY()==0) {
+                    Log.d("ooo", "onScrollChanged: " + scrollView.getScrollY());
+                    if (scrollView.getScrollY() == 0) {
+                        TransitionManager.beginDelayedTransition(rlJobDetailHeader, new TransitionSet().
+                                addTransition(new ChangeBounds()));
+                        ViewGroup.LayoutParams params = rlJobDetailHeader.getLayoutParams();
+                        params.height = heightHeader;
+                        rlJobDetailHeader.setLayoutParams(params);
                         jobsDetailTxtName.setVisibility(View.VISIBLE);
                         lnJobsDetailAddress.setVisibility(View.VISIBLE);
-                        rlJobDetailHeader.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, heightHeader));
+                    } else {
                     }
                 }
             }
         });
+        swipeRefesh.setOnRefreshListener(this);
     }
 
 
     @Override
     public void getData(ModelJobDetailDetail detail, ModeJobDetailCompany company,
                         List<ModelJobDetailJobRelate> relateList) {
-        jobsDetailTxtName.setText(company.getName());
-        jobsDetailTxtTitle.setText(detail.getTitle());
-        jobsDetailTxtTag1.setText(detail.getName());
-        jobsDetailTxtLocation.setText(detail.getAddress());
-        jobsDetailTxtBonus.setText(detail.getBonus() + "$");
-        if (detail.getSalaryMin() != 0 && detail.getSalaryMax() != 0) {
-            jobsDetailTxtSalary.setText(detail.getSalaryMin() + "~" + detail.getSalaryMax() + "$");
-        } else {
-            jobsDetailTxtSalary.setText("None");
+        if (detail != null) {
+            swipeRefesh.setRefreshing(false);
+            rlMainJobMain.setVisibility(View.VISIBLE);
+            jobsDetailTxtName.setText(company.getName());
+            jobsDetailTxtTitle.setText(detail.getTitle());
+            jobsDetailTxtTag1.setText(detail.getName());
+            jobsDetailTxtLocation.setText(detail.getAddress());
+            jobsDetailTxtBonus.setText(detail.getBonus() + "$");
+            if (detail.getSalaryMin() != 0 && detail.getSalaryMax() != 0) {
+                jobsDetailTxtSalary.setText(detail.getSalaryMin() + "~" + detail.getSalaryMax() + "$");
+            } else {
+                jobsDetailTxtSalary.setText("None");
+            }
+
+            if (detail.getType() == 1) {
+                jobsDetailTxtJobType.setText("FullTime");
+
+            } else {
+                jobsDetailTxtJobType.setText("PartTime");
+            }
+
+            jobsDetailTxtDeadline.setText(Constant.xuLyThoiGian(detail.getStartTime()));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
+                jobsDetailTxtDescription.setText(Html.fromHtml(detail.getDescription(), Html.FROM_HTML_MODE_COMPACT));
+                jobsDetailTxtBenefit.setText(Html.fromHtml(detail.getBenefit(), Html.FROM_HTML_MODE_COMPACT));
+                jobsDetailTxtRequirement.setText(Html.fromHtml(detail.getRequirement(), Html.FROM_HTML_MODE_COMPACT));
+            } else {
+
+
+                jobsDetailTxtDescription.setText(Html.fromHtml(detail.getDescription()));
+                jobsDetailTxtBenefit.setText(Html.fromHtml(detail.getBenefit()));
+                jobsDetailTxtRequirement.setText(Html.fromHtml(detail.getRequirement()));
+
+            }
+
+            createRcvRelateJob(relateList);
+
         }
-
-        if (detail.getType() == 1) {
-            jobsDetailTxtJobType.setText("FullTime");
-
-        } else {
-            jobsDetailTxtJobType.setText("PartTime");
-        }
-
-        jobsDetailTxtDeadline.setText(Constant.xuLyThoiGian(detail.getStartTime()));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            jobsDetailTxtDescription.setText(Html.fromHtml(detail.getDescription(), Html.FROM_HTML_MODE_COMPACT));
-            jobsDetailTxtBenefit.setText(Html.fromHtml(detail.getBenefit(), Html.FROM_HTML_MODE_COMPACT));
-            jobsDetailTxtRequirement.setText(Html.fromHtml(detail.getRequirement(), Html.FROM_HTML_MODE_COMPACT));
-        } else {
-            jobsDetailTxtDescription.setText(Html.fromHtml(detail.getDescription()));
-            jobsDetailTxtBenefit.setText(Html.fromHtml(detail.getBenefit()));
-            jobsDetailTxtRequirement.setText(Html.fromHtml(detail.getRequirement()));
-
-        }
-
-        createRcvRelateJob(relateList);
     }
 
     @Override
@@ -176,16 +203,20 @@ public class JobDetailActivity extends AppCompatActivity implements JobDetailVie
     }
 
     private void createRcvRelateJob(List<ModelJobDetailJobRelate> raRelateList) {
+        this.relateList = raRelateList;
+        AdapterJobRelate adapterJobRelate = new AdapterJobRelate(raRelateList, this);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(RecyclerView.HORIZONTAL);
         jobDetailRcvJobRelate.setLayoutManager(manager);
-        jobDetailRcvJobRelate.setAdapter(new AdapterJobRelate(raRelateList, this));
+        jobDetailRcvJobRelate.setAdapter(adapterJobRelate);
     }
 
 
     @Override
     public void clickedItem(int position) {
-
+        Intent intent = new Intent(this, JobDetailActivity.class);
+        intent.putExtra("slug", relateList.get(position).getSlug());
+        startActivity(intent);
     }
 
 
@@ -217,9 +248,16 @@ public class JobDetailActivity extends AppCompatActivity implements JobDetailVie
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         //up
-
         if (e1.getY() - e2.getY() > Ymin) {
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((int) RelativeLayout.LayoutParams.WRAP_CONTENT,
+
+            TransitionManager.beginDelayedTransition(rlJobDetailHeader,
+                    new TransitionSet().addTransition(new ChangeBounds()));
+            ViewGroup.LayoutParams layoutParamsHeader = rlJobDetailHeader.getLayoutParams();
+
+            layoutParamsHeader.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            rlJobDetailHeader.setLayoutParams(layoutParamsHeader);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((
+                    int) RelativeLayout.LayoutParams.WRAP_CONTENT,
                     (int) RelativeLayout.LayoutParams.WRAP_CONTENT);
             params.leftMargin = 20;
             params.topMargin = 20;
@@ -227,23 +265,22 @@ public class JobDetailActivity extends AppCompatActivity implements JobDetailVie
             params.rightMargin = 20;
             params.addRule(RelativeLayout.CENTER_VERTICAL);
             jobsDetailImgback.setLayoutParams(params);
+
             jobsDetailTxtName.setVisibility(View.GONE);
             lnJobsDetailAddress.setVisibility(View.GONE);
             jobsDetailTxtTitle.setTypeface(null, Typeface.BOLD);
-            rlJobDetailHeader.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
 
         }
-        //down
-        if (e2.getY() - e1.getY() > Ymin ) {
-
-        }
-        if(lnJobsDetailAddress.getVisibility() == View.GONE){
+        if (lnJobsDetailAddress.getVisibility() == View.GONE) {
             lnControll.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             lnControll.setVisibility(View.GONE);
         }
         return true;
     }
 
+    @Override
+    public void onRefresh() {
+        swipeRefesh.setRefreshing(false);
+    }
 }

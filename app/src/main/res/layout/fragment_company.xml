@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorBgCompany"
     android:orientation="vertical">
 
@@ -10,7 +10,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
         android:orientation="vertical"
         android:padding="@dimen/_5sdp">
 
@@ -18,7 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
             android:orientation="horizontal"
-            android:weightSum="10">
+            android:weightSum="10"
+            android:baselineAligned="false">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -26,19 +26,8 @@
                 android:layout_weight="9"
                 android:background="@drawable/custom_block_radius_10sdp"
                 android:paddingLeft="@dimen/_10sdp"
-                android:paddingRight="@dimen/_10sdp">
-
-                <EditText
-
-                    android:id="@+id/main_companies_key_words"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="@dimen/_30sdp"
-                    android:background="@null"
-                    android:hint="Search keywords"
-                    android:textColorHint="@color/textHintColor"
-                    android:textCursorDrawable="@drawable/custom_cusor_edittext"
-                    android:textSize="@dimen/_12ssp" />
+                android:paddingRight="@dimen/_10sdp"
+                tools:ignore="UselessParent">
 
 
                 <ImageView
@@ -48,30 +37,38 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/_3sdp"
-                    android:src="@drawable/ic_more_horizontal" />
+                    android:src="@drawable/ic_add_cycle_gray" />
+
                 <ImageView
                     android:id="@+id/main_companies_img_view_search"
                     android:layout_width="@dimen/_15sdp"
                     android:layout_height="@dimen/_15sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    android:layout_toLeftOf="@+id/main_company_img_view_search_more"
                     android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_toStartOf="@+id/main_company_img_view_search_more"
                     android:src="@drawable/ic_search" />
             </RelativeLayout>
         </LinearLayout>
 
         <RelativeLayout
-            android:layout_marginTop="@dimen/_5sdp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_5sdp">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/main_companies_rcv"
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/fragment_company_srf"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentTop="true">
+                android:layout_height="match_parent">
 
-            </androidx.recyclerview.widget.RecyclerView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/main_companies_rcv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
         </RelativeLayout>
 
     </LinearLayout>

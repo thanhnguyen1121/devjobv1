@@ -87,6 +87,15 @@ public class AdapterJobRelate extends RecyclerView.Adapter<AdapterJobRelate.Item
                 break;
         }
 
+        holder.rlParent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(listener != null){
+                    listener.clickedItem(position);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -97,8 +106,9 @@ public class AdapterJobRelate extends RecyclerView.Adapter<AdapterJobRelate.Item
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         private TextView txtIsHotJob, txtTitle, txtCompanyName, txtLoction, txtBonus,
                 txtTimeAgo, txtSkillTag1, txtSKillTag2, txtSkillTag3;
-        private RelativeLayout rlIsShowHotJob;
+        private RelativeLayout rlIsShowHotJob, rlParent;
         private ImageView imgLogo, imgSave;
+
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -115,6 +125,7 @@ public class AdapterJobRelate extends RecyclerView.Adapter<AdapterJobRelate.Item
             txtSkillTag3 = itemView.findViewById(R.id.item_rcv_relate_job_language3);
             rlIsShowHotJob = itemView.findViewById(R.id.rl_is_hot_job);
             imgSave = itemView.findViewById(R.id.item_rcv_relate_job_favorite);
+            rlParent = itemView.findViewById(R.id.rl_relate_job_item);
         }
     }
 }

@@ -100,6 +100,7 @@ public class FragmentJob extends Fragment implements FragmentJobViewImp, ItemRcv
         listSkill = new ArrayList<>();
         listCates = new ArrayList<>();
         spRefresh.setOnRefreshListener(this);
+        spRefresh.setRefreshing(true);
 
 
     }
@@ -109,6 +110,7 @@ public class FragmentJob extends Fragment implements FragmentJobViewImp, ItemRcv
         switch (view.getId()) {
 
             case R.id.main_jobs_img_view_search:
+                spRefresh.setRefreshing(true);
                 fragmentJobImp.getAllJobInfor(bonus, total, mainJobsKeyWords.getText().toString().trim());
                 break;
             case R.id.main_job_img_view_search_more:
@@ -128,15 +130,21 @@ public class FragmentJob extends Fragment implements FragmentJobViewImp, ItemRcv
     @Override
     public void getJobItems(List<JobItem> jobItemList, List<Company> companyList,
                             List<CountLevel> levelName, List<CountSkill> skillName, List<Cate> cateList) {
-        this.jobItemList = jobItemList;
+        if (jobItemList.isEmpty()) {
+            Toast.makeText(context, "Dữ liệu trống.", Toast.LENGTH_SHORT).show();
+        } else {
+            this.jobItemList = jobItemList;
+            this.listSkill = skillName;
+            this.listLevel = levelName;
+        }
         createRcvMainJobs(jobItemList, companyList, cateList);
-        this.listSkill = skillName;
-        this.listLevel = levelName;
         setOptionSearch(this.listLevel, this.listSkill);
+        spRefresh.setRefreshing(false);
     }
 
     @Override
     public void getJobItemsFilter(List<JobItem> jobItemList, List<Company> companyList, List<Cate> cateList) {
+        spRefresh.setRefreshing(false);
         if (jobItemList.isEmpty()) {
             Toast.makeText(context, "Không có công việc bạn cần tìm", Toast.LENGTH_SHORT).show();
             createRcvMainJobs(jobItemList, companyList, cateList);
@@ -168,29 +176,19 @@ public class FragmentJob extends Fragment implements FragmentJobViewImp, ItemRcv
         startActivity(intent);
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == Constant.REQUEST_CODE_SEARCH_MORE && resultCode == Constant.RESULT_CODE_SEARCH_MORE && data != null) {
-//            int bonus = data.getIntExtra("bonus", 0);
-//            int level = data.getIntExtra("level", 0);
-//            int skill = data.getIntExtra("skill", 0);
-//
-//            url = ApiUtil.BaseUrl + "api/job/job-listings?token=" + Constant.token;
-//            fragmentJobImp.getJobByFilter(url, bonus, level, skill);
-//        }
-//    }
 
     @Override
     public void onRefresh() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                mainJobsKeyWords.setText("");
                 isShowSearch = false;
                 lnShowSearchMore.setVisibility(View.GONE);
                 fragmentJobImp.getAllJobInfor(bonus, total, "");
-                spRefresh.setRefreshing(false);
+//                spRefresh.setRefreshing(false);
             }
-        }, 1000);
+        }, 500);
     }
 
     private void setOptionSearch(List<CountLevel> levelName, List<CountSkill> skillName) {
@@ -213,7 +211,6 @@ public class FragmentJob extends Fragment implements FragmentJobViewImp, ItemRcv
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
                 positionBonus = position;
-                //String url1 = xuLyUrl(positionBonus, positionLevel, positionSkill, levelName, skillName);
                 fragmentJobImp.getJobByFilter(xuLyUrl(positionBonus, positionLevel, positionSkill, levelName, skillName));
             }
         });
@@ -221,7 +218,6 @@ public class FragmentJob extends Fragment implements FragmentJobViewImp, ItemRcv
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
                 positionSkill = position;
-                //String url = xuLyUrl(positionBonus, positionLevel, positionSkill, levelName, skillName);
                 fragmentJobImp.getJobByFilter(xuLyUrl(positionBonus, positionLevel, positionSkill, levelName, skillName));
             }
         });
@@ -238,6 +234,7 @@ public class FragmentJob extends Fragment implements FragmentJobViewImp, ItemRcv
 
     private String xuLyUrl(int positionBonus, int positionLevel, int positionSkill,
                            List<CountLevel> levelName, List<CountSkill> skillName) {
+        spRefresh.setRefreshing(true);
         String url = ApiUtil.BaseUrl + "api/job/job-listings?token=" + Constant.token + "&totalPage=50";
         if (positionBonus != 0 && positionLevel != 0 && positionSkill != 0) {
 
@@ -259,7 +256,7 @@ public class FragmentJob extends Fragment implements FragmentJobViewImp, ItemRcv
             return url + "&filterSkill[]=" + skillName.get(positionSkill - 1).getCateId() +
                     "&filterLevel[]=" + levelName.get(positionLevel - 1).getLevelJob();
 
-        } else if ( positionLevel == 0) {
+        } else if (positionLevel == 0) {
 
             return url;
 
