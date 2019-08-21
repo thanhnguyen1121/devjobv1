@@ -2,29 +2,26 @@ package com.thanhnguyen.devjob.View.FragmentView.FragmentCompany;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.thanhnguyen.devjob.Adapter.AdapterMainRcvCompany;
 import com.thanhnguyen.devjob.Model.ModelCompany.CompanyItem;
-import com.thanhnguyen.devjob.Model.ModelCompany.CompanyModel;
-import com.thanhnguyen.devjob.Model.ModelJob.Company;
 import com.thanhnguyen.devjob.Presenter.FragmentCompanyPresenter.FragementCompayLogic;
 import com.thanhnguyen.devjob.Presenter.FragmentCompanyPresenter.FragmentCompanyImp;
 import com.thanhnguyen.devjob.Presenter.Interface.ItemRcvClickListener;
 import com.thanhnguyen.devjob.R;
-import com.thanhnguyen.devjob.Retrofit.ApiUtil;
 import com.thanhnguyen.devjob.Utils.Constant;
 import com.thanhnguyen.devjob.View.ActivityView.CompanyDetailActivity.CompanyActivityDetail;
 import com.thanhnguyen.devjob.View.ActivityView.CompanyViewSearchMore.CompanySearchMoreActivity;
@@ -36,16 +33,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-public class FragmentCompany extends Fragment implements FragmentCompanyViewImp, ItemRcvClickListener {
-    CircleImageView mainCompaniesImgUserAvatar;
-    @BindView(R.id.main_companies_key_words)
+public class FragmentCompany extends Fragment implements FragmentCompanyViewImp, ItemRcvClickListener, SwipeRefreshLayout.OnRefreshListener {
+
     EditText mainCompaniesKeyWords;
     @BindView(R.id.main_companies_rcv)
     RecyclerView mainCompaniesRcv;
+    @BindView(R.id.fragment_company_srf)
+    SwipeRefreshLayout fragmentCompanySrf;
 
     private AdapterMainRcvCompany adapterMainRcvCompany;
     private FragmentCompanyImp fragmentCompanyImp;
@@ -66,6 +61,8 @@ public class FragmentCompany extends Fragment implements FragmentCompanyViewImp,
         fragmentCompanyImp = new FragementCompayLogic(this);
         fragmentCompanyImp.getListCompany(Constant.token, "", 50, "");
         companyItemList = new ArrayList<>();
+        fragmentCompanySrf.setOnRefreshListener(this);
+        fragmentCompanySrf.setRefreshing(true);
     }
 
     @OnClick({R.id.main_companies_img_view_search, R.id.main_company_img_view_search_more})
@@ -85,8 +82,12 @@ public class FragmentCompany extends Fragment implements FragmentCompanyViewImp,
 
     @Override
     public void getListCompany(List<CompanyItem> companyItemList) {
-        this.companyItemList = companyItemList;
-        createMainCompanyRcv(companyItemList);
+        if( ! companyItemList.isEmpty()){
+            fragmentCompanySrf.setRefreshing(false);
+            this.companyItemList = companyItemList;
+            createMainCompanyRcv(companyItemList);
+        }
+
     }
 
     @Override
@@ -108,5 +109,16 @@ public class FragmentCompany extends Fragment implements FragmentCompanyViewImp,
         Intent intent = new Intent(getActivity(), CompanyActivityDetail.class);
         intent.putExtra("company", companyItemList.get(position));
         startActivity(intent);
+    }
+
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                fragmentCompanyImp.getListCompany(Constant.token, "", 50, "");
+                fragmentCompanySrf.setRefreshing(false);
+            }
+        }, 1000);
     }
 }
