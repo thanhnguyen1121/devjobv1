@@ -125,22 +125,22 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
             saveUserEmaiAndPass(loginCbRemember.isChecked());
             Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
 
-            ApiUtil.getData().getEmployerDashBroadInfor(Constant.token, 10, "asc")
-                    .enqueue(new Callback<EmployeeDashbroadJobs>() {
-                @Override
-                public void onResponse(Call<EmployeeDashbroadJobs> call, Response<EmployeeDashbroadJobs> response) {
-                    if(response.isSuccessful()){
-                        Log.d("ddd", "onResponse: " + response.body());
-                    }else{
-                        Log.d("ddd", "onResponse: " + response.errorBody());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<EmployeeDashbroadJobs> call, Throwable t) {
-                    Log.d("ddd", "onFailure: " + t.getMessage());
-                }
-            });
+//            ApiUtil.getData().getEmployerDashBroadInfor(Constant.token, 10, "asc")
+//                    .enqueue(new Callback<EmployeeDashbroadJobs>() {
+//                @Override
+//                public void onResponse(Call<EmployeeDashbroadJobs> call, Response<EmployeeDashbroadJobs> response) {
+//                    if(response.isSuccessful()){
+//                        Log.d("ddd", "onResponse: " + response.body());
+//                    }else{
+//                        Log.d("ddd", "onResponse: " + response.errorBody());
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<EmployeeDashbroadJobs> call, Throwable t) {
+//                    Log.d("ddd", "onFailure: " + t.getMessage());
+//                }
+//            });
 
         }
     }
