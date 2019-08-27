@@ -101,7 +101,7 @@ public interface DataClient {
 
     //check permisstion
     @GET("api/candidate-auth")
-    Call<StatusAfterLogin> getxxxx(@Query("token") String token);
+    Call<StatusAfterLogin> get(@Query("token") String token);
 
     @GET("api/auth")
     Call<UserLoginInfo> getStatusUserLogin(@Query("token") String key);
