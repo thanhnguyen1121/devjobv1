@@ -12,8 +12,10 @@ import com.thanhnguyen.devjob.Model.ModelEventDetail.ModeEventDetailInfo;
 import com.thanhnguyen.devjob.Model.ModelHome.HomeInfo;
 import com.thanhnguyen.devjob.Model.ModelJob.JobInfo;
 import com.thanhnguyen.devjob.Model.ModelJobDetail.ModelJobDetailJobDetail;
+import com.thanhnguyen.devjob.Model.StatusAfterLogin;
 import com.thanhnguyen.devjob.Model.UserModel.RegisterStatus;
 import com.thanhnguyen.devjob.Model.UserModel.UserInfo;
+import com.thanhnguyen.devjob.Model.UserModel.UserLoginInfo;
 import com.thanhnguyen.devjob.Model.UserModel.UserStatus;
 
 
