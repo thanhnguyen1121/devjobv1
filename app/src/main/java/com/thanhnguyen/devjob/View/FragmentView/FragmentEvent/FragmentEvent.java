@@ -6,23 +6,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.thanhnguyen.devjob.Adapter.AdapterMainRcvEvent;
-import com.thanhnguyen.devjob.Model.ModelEvent.EventInfo;
 import com.thanhnguyen.devjob.Model.ModelEvent.EventItem;
 import com.thanhnguyen.devjob.Presenter.FragmentEventPresenter.FragmentEventPresenterImp;
 import com.thanhnguyen.devjob.Presenter.FragmentEventPresenter.FragmentEventPresenterLogic;
 import com.thanhnguyen.devjob.Presenter.Interface.ItemRcvClickListener;
 import com.thanhnguyen.devjob.R;
-import com.thanhnguyen.devjob.Retrofit.ApiUtil;
 import com.thanhnguyen.devjob.Utils.Constant;
 import com.thanhnguyen.devjob.View.ActivityView.EventPostDetailActivity.EventPostDetailActivity;
 
@@ -31,17 +28,15 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-public class FragmentEvent extends Fragment implements FragmentEventViewImp, ItemRcvClickListener {
+public class FragmentEvent extends Fragment implements FragmentEventViewImp, ItemRcvClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     CircleImageView mainEventsImgUserAvatar;
     @BindView(R.id.main_event_rcv)
     RecyclerView mainEventRcv;
+    @BindView(R.id.fragment_event_swipe)
+    SwipeRefreshLayout fragmentEventSwipe;
 
     private AdapterMainRcvEvent adapterMainRcvEvent;
     private FragmentEventPresenterImp fragmentEventPresenterImp;
@@ -60,8 +55,9 @@ public class FragmentEvent extends Fragment implements FragmentEventViewImp, Ite
         super.onViewCreated(view, savedInstanceState);
         fragmentEventPresenterImp = new FragmentEventPresenterLogic(this);
         fragmentEventPresenterImp.getAllEventPost(Constant.token);
-
+        fragmentEventSwipe.setRefreshing(true);
         this.eventItemList = new ArrayList<>();
+        fragmentEventSwipe.setOnRefreshListener(this);
     }
 
     private void createRcvEvent(List<EventItem> eventItemList) {
@@ -77,8 +73,11 @@ public class FragmentEvent extends Fragment implements FragmentEventViewImp, Ite
 
     @Override
     public void getData(List<EventItem> eventItemList) {
-        this.eventItemList = eventItemList;
-        createRcvEvent(eventItemList);
+        if(!eventItemList.isEmpty()){
+            fragmentEventSwipe.setRefreshing(false);
+            this.eventItemList = eventItemList;
+            createRcvEvent(eventItemList);
+        }
     }
 
     @Override
@@ -91,5 +90,10 @@ public class FragmentEvent extends Fragment implements FragmentEventViewImp, Ite
         Intent intent = new Intent(getActivity(), EventPostDetailActivity.class);
         intent.putExtra("eventdetail", eventItemList.get(position));
         startActivity(intent);
+    }
+
+    @Override
+    public void onRefresh() {
+        fragmentEventPresenterImp.getAllEventPost(Constant.token);
     }
 }

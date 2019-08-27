@@ -57,6 +57,8 @@ dependencies {
     implementation "com.squareup.okhttp:okhttp:2.7.5"
     implementation "com.squareup.okhttp:okhttp-urlconnection:2.7.5"
     implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:4.1.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
 
 
 }

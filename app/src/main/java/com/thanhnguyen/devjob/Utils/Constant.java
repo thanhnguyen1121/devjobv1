@@ -1,5 +1,6 @@
 package com.thanhnguyen.devjob.Utils;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.thanhnguyen.devjob.Model.test;
@@ -7,6 +8,7 @@ import com.thanhnguyen.devjob.Model.test;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashSet;
 
 public class Constant {
     public static String token = "0F405C9DD1DE1021140B07B8CE534693";
@@ -34,4 +36,5 @@ public class Constant {
 
         return "";
     }
+    
 }

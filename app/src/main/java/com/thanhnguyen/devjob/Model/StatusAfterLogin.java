@@ -8,6 +8,9 @@ public class StatusAfterLogin {
     @SerializedName("message")
     @Expose
     private String message;
+    @SerializedName("status")
+    @Expose
+    private String status;
 
     public String getMessage() {
         return message;
@@ -16,5 +19,14 @@ public class StatusAfterLogin {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
 
 }

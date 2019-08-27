@@ -6,23 +6,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.thanhnguyen.devjob.Adapter.AdapterFragmentCourse;
-import com.thanhnguyen.devjob.Adapter.AdapterMainRcvBlog;
-import com.thanhnguyen.devjob.Model.ModelCourse.CourseInfo;
 import com.thanhnguyen.devjob.Model.ModelCourse.CourseItem;
 import com.thanhnguyen.devjob.Presenter.FragmentCoursePresenter.FragmentCoursePresenterImp;
 import com.thanhnguyen.devjob.Presenter.FragmentCoursePresenter.FragmentCoursePresenterLogic;
 import com.thanhnguyen.devjob.Presenter.Interface.ItemRcvClickListener;
 import com.thanhnguyen.devjob.R;
-import com.thanhnguyen.devjob.Retrofit.ApiUtil;
 import com.thanhnguyen.devjob.Utils.Constant;
 import com.thanhnguyen.devjob.View.ActivityView.CourseDetailActivity.CourseDetailActivity;
 
@@ -30,11 +27,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class FragmentCourse extends Fragment implements FragmentCourseViewImp, ItemRcvClickListener {
+
     private RecyclerView fragmentCoreRcv;
 
     private AdapterFragmentCourse adapterFragmentCourse;
@@ -55,12 +50,10 @@ public class FragmentCourse extends Fragment implements FragmentCourseViewImp, I
         presenter = new FragmentCoursePresenterLogic(this);
         presenter.getData(Constant.token);
         courseItemList = new ArrayList<>();
-
-
     }
 
     private void createRcvCourse(List<CourseItem> courseItemList) {
-        adapterFragmentCourse = new AdapterFragmentCourse(courseItemList,this);
+        adapterFragmentCourse = new AdapterFragmentCourse(courseItemList, this);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(RecyclerView.VERTICAL);
         fragmentCoreRcv.setLayoutManager(manager);
@@ -69,13 +62,14 @@ public class FragmentCourse extends Fragment implements FragmentCourseViewImp, I
 
     @Override
     public void getListCourse(List<CourseItem> courseItemList) {
-        this.courseItemList = courseItemList;
-        createRcvCourse(this.courseItemList);
+        if (!courseItemList.isEmpty()) {
+            this.courseItemList = courseItemList;
+            createRcvCourse(this.courseItemList);
+        }
     }
 
     @Override
     public void getError(String error) {
-
         Log.d("aaa", "getError: " + error);
     }
 
@@ -85,6 +79,4 @@ public class FragmentCourse extends Fragment implements FragmentCourseViewImp, I
         intent.putExtra("course", courseItemList.get(position));
         startActivity(intent);
     }
-
-
 }

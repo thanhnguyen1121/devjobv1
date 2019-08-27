@@ -87,7 +87,8 @@
                 android:layout_marginRight="@dimen/_10sdp"
                 android:background="@null"
                 android:hint="Password"
-                android:inputType="textPassword"
+
+                android:inputType="number"
                 android:lines="1"
                 android:textSize="@dimen/_12ssp" />
         </LinearLayout>

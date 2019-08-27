@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
@@ -63,6 +64,10 @@ public class CompanyActivityDetail extends AppCompatActivity implements CompanyD
     CircleIndicator indicator;
     @BindView(R.id.img_empty)
     ImageView imgEmpty;
+    @BindView(R.id.activity_company_detail_nestscrollview)
+    NestedScrollView activityCompanyDetailNestscrollview;
+    @BindView(R.id.activity_compay_detail_swipeRefreshLayout)
+    SwipeRefreshLayout activityCompayDetailSwipeRefreshLayout;
 
     private CompanyItem companyItem;
     private CompanyDetailImp companyDetailImp;
@@ -82,6 +87,8 @@ public class CompanyActivityDetail extends AppCompatActivity implements CompanyD
         companyDetailJobItems = new ArrayList<>();
         companyDetailTxtname.requestFocus();
         companyDetailTxtname.setFocusableInTouchMode(true);
+        activityCompanyDetailNestscrollview.setVisibility(View.GONE);
+        activityCompayDetailSwipeRefreshLayout.setRefreshing(true);
 
     }
 
@@ -89,41 +96,42 @@ public class CompanyActivityDetail extends AppCompatActivity implements CompanyD
     @Override
     public void getData(Detail detail, List<Thumbnail> thumbnailList,
                         List<CompanyDetailJobItem> companyDetailJobItemList) {
-        this.companyDetailJobItems = companyDetailJobItemList;
-        companyDetailTxtname.setText(detail.getName());
-        companyDetailTxtlocation.setText(detail.getAddress());
-        companyDetailTxtteamSize.setText(detail.getHumanResource() != null ?
-                detail.getHumanResource() + " people" : "0 people");
-        Glide.with(this).load(detail.getLogo())
-                .error(R.drawable.ic_user_border)
-                .into(imgLogo);
-        companyDetailTxtflower.setText(detail.getAmountApplies() + " followers");
-        companyDetailTxtPostJobs.setText(detail.getAmountJob() + " jobs");
-        companyDetailTxtAllViews.setText(detail.getSumViews() + " views");
+        if (detail != null) {
+            activityCompayDetailSwipeRefreshLayout.setRefreshing(false);
+            activityCompanyDetailNestscrollview.setVisibility(View.VISIBLE);
+            this.companyDetailJobItems = companyDetailJobItemList;
+            companyDetailTxtname.setText(detail.getName());
+            companyDetailTxtlocation.setText(detail.getAddress());
+            companyDetailTxtteamSize.setText(detail.getHumanResource() != null ?
+                    detail.getHumanResource() + " people" : "0 people");
+            Glide.with(this).load(detail.getLogo())
+                    .error(R.drawable.ic_user_border)
+                    .into(imgLogo);
+            companyDetailTxtflower.setText(detail.getAmountApplies() + " followers");
+            companyDetailTxtPostJobs.setText(detail.getAmountJob() + " jobs");
+            companyDetailTxtAllViews.setText(detail.getSumViews() + " views");
 
-        if(detail.getAbout() != null){
-            companyDetailTxtAbout.setText(detail.getAbout());
-        }else{
-            companyDetailTxtAbout.setText("Empty");
+            if (detail.getAbout() != null) {
+                companyDetailTxtAbout.setText(detail.getAbout());
+            } else {
+                companyDetailTxtAbout.setText("Empty");
+            }
+            if (!thumbnailList.isEmpty()) {
+                viewPager.setVisibility(View.VISIBLE);
+                indicator.setVisibility(View.VISIBLE);
+                imgEmpty.setVisibility(View.GONE);
+                SamplePagerAdapter samplePagerAdapter = new SamplePagerAdapter(thumbnailList);
+                viewPager.setAdapter(samplePagerAdapter);
+                indicator.setViewPager(viewPager);
+            } else {
+                imgEmpty.setVisibility(View.VISIBLE);
+                indicator.setVisibility(View.GONE);
+                viewPager.setVisibility(View.GONE);
+                imgEmpty.setImageResource(R.drawable.ic_empty_file);
+            }
+            createRcvJob(companyDetailJobItemList, detail);
         }
 
-
-        if (!thumbnailList.isEmpty()) {
-            viewPager.setVisibility(View.VISIBLE);
-            indicator.setVisibility(View.VISIBLE);
-            imgEmpty.setVisibility(View.GONE);
-            SamplePagerAdapter samplePagerAdapter = new SamplePagerAdapter(thumbnailList);
-            viewPager.setAdapter(samplePagerAdapter);
-            indicator.setViewPager(viewPager);
-        }else{
-            imgEmpty.setVisibility(View.VISIBLE);
-            indicator.setVisibility(View.GONE);
-            viewPager.setVisibility(View.GONE);
-            imgEmpty.setImageResource(R.drawable.ic_empty_file);
-        }
-
-
-        createRcvJob(companyDetailJobItemList, detail);
     }
 
     @Override

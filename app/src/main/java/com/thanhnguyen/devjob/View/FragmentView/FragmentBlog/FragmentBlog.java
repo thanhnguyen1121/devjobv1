@@ -6,24 +6,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.thanhnguyen.devjob.Adapter.AdapterMainRcvBlog;
-import com.thanhnguyen.devjob.Model.ModelBlog.BlogInfo;
 import com.thanhnguyen.devjob.Model.ModelBlog.BlogItem;
 import com.thanhnguyen.devjob.Presenter.FragmentBlogPresenter.FragmentBlogPresenterImp;
 import com.thanhnguyen.devjob.Presenter.FragmentBlogPresenter.FragmentBlogPresenterLogic;
 import com.thanhnguyen.devjob.Presenter.Interface.ItemRcvClickListener;
 import com.thanhnguyen.devjob.R;
-import com.thanhnguyen.devjob.Retrofit.ApiUtil;
 import com.thanhnguyen.devjob.Utils.Constant;
 import com.thanhnguyen.devjob.View.ActivityView.BlogDetailActivity.BlogDetailActivity;
 
@@ -32,16 +28,15 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-public class FragmentBlog extends Fragment implements FragmentBlogViewImp, ItemRcvClickListener {
+public class FragmentBlog extends Fragment implements FragmentBlogViewImp, ItemRcvClickListener, SwipeRefreshLayout.OnRefreshListener {
     CircleImageView mainEventsImgUserAvatar;
     @BindView(R.id.main_blog_rcv)
     RecyclerView mainBlogRcv;
+    @BindView(R.id.fragment_blog_swipe)
+    SwipeRefreshLayout fragmentBlogSwipe;
+
 
     private List<BlogItem> blogItemList;
     private AdapterMainRcvBlog adapterMainRcvBlog;
@@ -61,12 +56,15 @@ public class FragmentBlog extends Fragment implements FragmentBlogViewImp, ItemR
         blogItemList = new ArrayList<>();
         fragmentBlogPresenterImp = new FragmentBlogPresenterLogic(this);
         fragmentBlogPresenterImp.getData(Constant.token);
+        fragmentBlogSwipe.setRefreshing(true);
+        fragmentBlogSwipe.setOnRefreshListener(this);
 
     }
 
 
     @Override
     public void getListBlog(List<BlogItem> blogItemList) {
+        fragmentBlogSwipe.setRefreshing(false);
         this.blogItemList = blogItemList;
         createMainRcv(this.blogItemList);
     }
@@ -90,5 +88,10 @@ public class FragmentBlog extends Fragment implements FragmentBlogViewImp, ItemR
         manager.setOrientation(RecyclerView.VERTICAL);
         mainBlogRcv.setLayoutManager(manager);
         mainBlogRcv.setAdapter(adapterMainRcvBlog);
+    }
+
+    @Override
+    public void onRefresh() {
+        fragmentBlogPresenterImp.getData(Constant.token);
     }
 }
