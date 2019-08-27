@@ -61,4 +61,14 @@ public class UserStatus {
         this.role = role;
     }
 
+    @Override
+    public String toString() {
+        return "UserStatus{" +
+                "title='" + title + '\'' +
+                ", message='" + message + '\'' +
+                ", status='" + status + '\'' +
+                ", id=" + id +
+                ", role=" + role +
+                '}';
+    }
 }

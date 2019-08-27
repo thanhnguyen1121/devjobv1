@@ -19,6 +19,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.thanhnguyen.devjob.Model.LoginPresenter.LoginPresenterImp;
 import com.thanhnguyen.devjob.Model.LoginPresenter.LoginPresenterLogic;
+import com.thanhnguyen.devjob.Model.ModelEmployer.EmployeeDashbroadJobs;
 import com.thanhnguyen.devjob.Model.StatusAfterLogin;
 import com.thanhnguyen.devjob.Model.UserModel.UserLoginInfo;
 import com.thanhnguyen.devjob.Model.UserModel.UserStatus;
@@ -124,15 +125,20 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
             saveUserEmaiAndPass(loginCbRemember.isChecked());
             Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
 
-            ApiUtil.getData().getStatusUserLogin(Constant.token).enqueue(new Callback<UserLoginInfo>() {
+            ApiUtil.getData().getEmployerDashBroadInfor(Constant.token, 10, "asc")
+                    .enqueue(new Callback<EmployeeDashbroadJobs>() {
                 @Override
-                public void onResponse(Call<UserLoginInfo> call, Response<UserLoginInfo> response) {
-                    Log.d("bbb", "onResponse: " + response);
+                public void onResponse(Call<EmployeeDashbroadJobs> call, Response<EmployeeDashbroadJobs> response) {
+                    if(response.isSuccessful()){
+                        Log.d("ddd", "onResponse: " + response.body());
+                    }else{
+                        Log.d("ddd", "onResponse: " + response.errorBody());
+                    }
                 }
 
                 @Override
-                public void onFailure(Call<UserLoginInfo> call, Throwable t) {
-                    Log.d("bbb", "onFailure: " + t.getMessage());
+                public void onFailure(Call<EmployeeDashbroadJobs> call, Throwable t) {
+                    Log.d("ddd", "onFailure: " + t.getMessage());
                 }
             });
 
@@ -143,6 +149,6 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
     public void getError(String mes) {
 
     }
-    //////////////////////////////////////
+
 
 }

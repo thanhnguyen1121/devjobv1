@@ -1,7 +1,9 @@
 package com.thanhnguyen.devjob.View.ActivityView.MainActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -37,6 +39,7 @@ import org.json.JSONObject;
 
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
+import java.util.HashSet;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -128,4 +131,5 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
+
 }

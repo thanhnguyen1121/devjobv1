@@ -2,17 +2,16 @@ package com.thanhnguyen.devjob.View.FragmentView.FragmentTopJob;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.thanhnguyen.devjob.Adapter.AdapterMainRcvJobs;
 import com.thanhnguyen.devjob.Model.ModelJob.Cate;
@@ -34,10 +33,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FragmentTopJob extends Fragment implements ItemRcvClickListener, FragmentJobViewImp {
+public class FragmentTopJob extends Fragment implements ItemRcvClickListener, FragmentJobViewImp, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.fragment_top_jobs_rcv_list)
     RecyclerView fragmentTopJobsRcvList;
+    @BindView(R.id.fragment_top_job_swipeRefreshLayout)
+    SwipeRefreshLayout fragmentTopJobSwipeRefreshLayout;
+
     private AdapterMainRcvJobs adapterMainRcvJobs;
     private List<JobItem> jobItemList;
     private List<Company> companyList;
@@ -64,6 +66,8 @@ public class FragmentTopJob extends Fragment implements ItemRcvClickListener, Fr
         this.jobItemList = new ArrayList<>();
         presenter = new FragmentJobLogic(this);
         presenter.getAllJobInfor(0, 10, "");
+        fragmentTopJobSwipeRefreshLayout.setRefreshing(true);
+       fragmentTopJobSwipeRefreshLayout.setOnRefreshListener(this);
     }
 
     @Override
@@ -75,17 +79,19 @@ public class FragmentTopJob extends Fragment implements ItemRcvClickListener, Fr
 
     @Override
     public void getJobItems(List<JobItem> jobItemList, List<Company> companyList,
-                            List<CountLevel> levelName, List<CountSkill> skillName,List<Cate> cateList) {
-        this.jobItemList = jobItemList;
-        this.companyList = companyList;
+                            List<CountLevel> levelName, List<CountSkill> skillName, List<Cate> cateList) {
+       if(!jobItemList.isEmpty()){
+           fragmentTopJobSwipeRefreshLayout.setRefreshing(false);
+           this.jobItemList = jobItemList;
+           this.companyList = companyList;
 
-        if (check == 1) {
-            Collections.sort(this.jobItemList);
-            createRcv(jobItemList, companyList, cateList);
-        } else {
-            createRcv(jobItemList, companyList, cateList);
-        }
-
+           if (check == 1) {
+               Collections.sort(this.jobItemList);
+               createRcv(jobItemList, companyList, cateList);
+           } else {
+               createRcv(jobItemList, companyList, cateList);
+           }
+       }
     }
 
     @Override
@@ -107,4 +113,8 @@ public class FragmentTopJob extends Fragment implements ItemRcvClickListener, Fr
         fragmentTopJobsRcvList.hasFixedSize();
     }
 
+    @Override
+    public void onRefresh() {
+        presenter.getAllJobInfor(0, 10, "");
+    }
 }

@@ -4,6 +4,7 @@ import com.thanhnguyen.devjob.Model.ModelBlog.BlogInfo;
 import com.thanhnguyen.devjob.Model.ModelCompany.CompanyModel;
 import com.thanhnguyen.devjob.Model.ModelCompanyDetail.ModelCompanyDetail;
 import com.thanhnguyen.devjob.Model.ModelCourse.CourseInfo;
+import com.thanhnguyen.devjob.Model.ModelEmployer.EmployeeDashbroadJobs;
 import com.thanhnguyen.devjob.Model.ModelEvent.EventInfo;
 import com.thanhnguyen.devjob.Model.ModelEventDetail.ModeEventDetailInfo;
 import com.thanhnguyen.devjob.Model.ModelHome.HomeInfo;
@@ -103,7 +104,16 @@ public interface DataClient {
     @GET("api/candidate-auth")
     Call<StatusAfterLogin> getxxxx(@Query("token") String token);
 
+    @GET("api/employer-auth")
+    Call<StatusAfterLogin> getInfoAfterLogin(@Query("token") String token);
+
     @GET("api/auth")
     Call<UserLoginInfo> getStatusUserLogin(@Query("token") String key);
+
+
+    @GET("api/employer-auth/dashboard")
+    Call<EmployeeDashbroadJobs> getEmployerDashBroadInfor(@Query("token") String token,
+                                                          @Query("amount") int amount,
+                                                          @Query("sort") String sort);
 
 }
