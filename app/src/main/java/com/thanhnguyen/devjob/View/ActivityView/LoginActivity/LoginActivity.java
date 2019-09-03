@@ -12,43 +12,16 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.thanhnguyen.devjob.Model.LoginPresenter.LoginPresenterImp;
-import com.thanhnguyen.devjob.Model.LoginPresenter.LoginPresenterLogic;
-import com.thanhnguyen.devjob.Model.ModelEmployer.EmployeeDashbroadJobs;
-import com.thanhnguyen.devjob.Model.StatusAfterLogin;
-import com.thanhnguyen.devjob.Model.UserModel.UserLoginInfo;
+import com.thanhnguyen.devjob.Presenter.LoginPresenter.LoginPresenterImp;
+import com.thanhnguyen.devjob.Presenter.LoginPresenter.LoginPresenterLogic;
 import com.thanhnguyen.devjob.Model.UserModel.UserStatus;
 import com.thanhnguyen.devjob.R;
-import com.thanhnguyen.devjob.Retrofit.ApiUtil;
 import com.thanhnguyen.devjob.Utils.Constant;
 import com.thanhnguyen.devjob.View.ActivityView.RegisterActivity.RegisterActivity;
-
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.security.cert.CertificateException;
-import java.util.concurrent.TimeUnit;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity implements LoginActivityViewImp {
 
@@ -123,25 +96,8 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
             Toast.makeText(this, "Sai tên tài khoản hoặc mật khẩu!", Toast.LENGTH_SHORT).show();
         } else {
             saveUserEmaiAndPass(loginCbRemember.isChecked());
-            Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-
-//            ApiUtil.getData().getEmployerDashBroadInfor(Constant.token, 10, "asc")
-//                    .enqueue(new Callback<EmployeeDashbroadJobs>() {
-//                @Override
-//                public void onResponse(Call<EmployeeDashbroadJobs> call, Response<EmployeeDashbroadJobs> response) {
-//                    if(response.isSuccessful()){
-//                        Log.d("ddd", "onResponse: " + response.body());
-//                    }else{
-//                        Log.d("ddd", "onResponse: " + response.errorBody());
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<EmployeeDashbroadJobs> call, Throwable t) {
-//                    Log.d("ddd", "onFailure: " + t.getMessage());
-//                }
-//            });
-
+            //chỗ này sẽ để xử lý cái mẹ gì ý
+            Toast.makeText(this, "Thanh cong", Toast.LENGTH_SHORT).show();
         }
     }
 

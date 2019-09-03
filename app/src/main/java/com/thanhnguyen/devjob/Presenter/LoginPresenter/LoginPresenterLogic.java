@@ -1,4 +1,4 @@
-package com.thanhnguyen.devjob.Model.LoginPresenter;
+package com.thanhnguyen.devjob.Presenter.LoginPresenter;
 
 import android.util.Log;
 
@@ -7,6 +7,10 @@ import com.thanhnguyen.devjob.Retrofit.ApiUtil;
 import com.thanhnguyen.devjob.Utils.Constant;
 import com.thanhnguyen.devjob.View.ActivityView.LoginActivity.LoginActivityViewImp;
 
+import java.util.List;
+import java.util.Map;
+
+import okhttp3.Headers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,6 +30,12 @@ public class LoginPresenterLogic implements LoginPresenterImp {
                     public void onResponse(Call<UserStatus> call, Response<UserStatus> response) {
                         Log.d("aaa", "onResponse: " + response.body());
                         loginActivityViewImp.getUserStatus(response.body());
+                        Headers headers = response.headers();
+                        Map<String, List<String>> headerList = headers.toMultimap();
+                        List<String> listCookie = headerList.get("set-cookie");
+
+                        String cookie = listCookie.get(listCookie.size()-1);
+                        Constant.setCookie(cookie);
                     }
 
                     @Override
@@ -34,5 +44,18 @@ public class LoginPresenterLogic implements LoginPresenterImp {
                     }
                 });
 
+    }
+
+    @Override
+    public void switchUserInterface(int role) {
+        switch (role){
+            case 1:
+
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+        }
     }
 }
