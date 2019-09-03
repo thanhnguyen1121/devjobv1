@@ -1,5 +1,6 @@
-package com.thanhnguyen.devjob.Model.LoginPresenter;
+package com.thanhnguyen.devjob.Presenter.LoginPresenter;
 
 public interface LoginPresenterImp {
     void login(String token, String email, String password);
+    void switchUserInterface(int role);
 }

@@ -36,5 +36,10 @@ public class Constant {
 
         return "";
     }
-    
+
+    public static void setCookie(String cookie){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("cookie", cookie);
+        editor.commit();
+    }
 }

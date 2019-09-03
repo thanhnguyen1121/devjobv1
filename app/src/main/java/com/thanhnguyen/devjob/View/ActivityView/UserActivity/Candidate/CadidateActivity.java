@@ -68,6 +68,8 @@ public class CadidateActivity extends AppCompatActivity implements ItemRcvClickL
                 Toast.makeText(CadidateActivity.this, item +"", Toast.LENGTH_SHORT).show();
             }
         });
+
+
     }
 
     private void createSlidingMenu(SlidingMenu menu) {
